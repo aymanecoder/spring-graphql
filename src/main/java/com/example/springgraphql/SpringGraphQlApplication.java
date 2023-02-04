@@ -16,7 +16,7 @@ public class SpringGraphQlApplication {
     }
 
 
-    //    @Bean
+//        @Bean
 //    CommandLineRunner run(CategoryRepository categoryRepprository,
 //                          ProductRepository productRepository){
 //        return args -> {

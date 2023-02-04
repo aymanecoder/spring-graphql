@@ -8,6 +8,8 @@ type Query{
 
 type Mutation{
     saveProduct(product :ProductRequest): Product,
+    updateProduct(id :String,product :ProductRequest): Product
+    deleteProduct(id :String): String
 }
 type Product{
     id: String
@@ -26,4 +28,5 @@ input ProductRequest{
     name: String,
     price: Float,
     quantity: Int,
+    categoryId :Float
 }

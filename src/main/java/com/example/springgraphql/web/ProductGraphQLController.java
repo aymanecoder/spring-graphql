@@ -1,5 +1,6 @@
 package com.example.springgraphql.web;
 
+import com.example.springgraphql.dto.ProductRequestDTO;
 import com.example.springgraphql.entities.Category;
 import com.example.springgraphql.entities.Product;
 import com.example.springgraphql.repository.CategoryRepository;
@@ -47,8 +48,30 @@ public class ProductGraphQLController {
     }
 
     @MutationMapping
-    public Product saveProduct(@Argument Product product){
-        product.setId(UUID.randomUUID().toString());
-        return productRepository.save(product);
+    public Product saveProduct(@Argument ProductRequestDTO product){
+        Category category = categoryRepository.findById(product.categoryId()).orElse(null);
+        Product productToSave = new Product();
+        productToSave.setId(UUID.randomUUID().toString());
+        productToSave.setName(product.name());
+        productToSave.setPrice(product.price());
+        productToSave.setQuantity(product.quantity());
+        productToSave.setCategory(category);
+        return productRepository.save(productToSave);
+    }
+    @MutationMapping
+    public Product updateProduct(@Argument String id,@Argument ProductRequestDTO product){
+        Category category = categoryRepository.findById(product.categoryId()).orElse(null);
+        Product productToSave = new Product();
+        productToSave.setId(id);
+        productToSave.setName(product.name());
+        productToSave.setPrice(product.price());
+        productToSave.setQuantity(product.quantity());
+        productToSave.setCategory(category);
+        return productRepository.save(productToSave);
+    }
+    @MutationMapping
+    public String deleteProduct(@Argument String id){
+        productRepository.deleteById(id);
+        return "Product deleted successfully";
     }
 }
